@@ -1,13 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Mijn Homepagina</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+<header>
+    <h1>Mijn Homepagina</h1>
+</header>
 
+<main>
+    <h2>Welkom bij Zweefvliegclub sky high! </h2>
+    <p>Dit is een voorbeeld van een homepagina gemaakt met HTML en CSS.</p>
+</main>
+
+<footer>
+    &copy; 2023 Mijn Homepagina. Alle rechten voorbehouden.
+</footer>
 </body>
 </html>
