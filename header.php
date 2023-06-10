@@ -9,12 +9,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="vluchtplanner.html">Vluchtplanner</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signin.php">Inloggen</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.php">Registreren</a>
-                </li>
+                <?php
+                if (isset($_COOKIE["session_token"])) {
+                    echo <<<EOL
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Uitloggen</a>
+                    </li>
+                    EOL;
+                } else {
+                    echo <<<EOL
+                    <li class="nav-item">
+                        <a class="nav-link" href="signin.php">Inloggen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signup.php">Registreren</a>
+                    </li>
+                    EOL;
+                }
+                ?>
+
             </ul>
         </div>
     </nav>
