@@ -25,7 +25,6 @@
                     }
 
                 }
-                $session_token = $_COOKIE["session_token"];
 
                 if ($userId && $is_admin) {
                     echo <<<EOL
