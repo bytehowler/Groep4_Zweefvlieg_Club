@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost1";
+$servername = "localhost";
 $username = "root";
 $password = "";
 $database = "skyhigh_db";
