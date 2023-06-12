@@ -49,7 +49,7 @@
                 } else {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="signin.php">Inloggen</a>
+                        <a class="nav-link" href="login.php">Inloggen</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="signup.php">Registreren</a>
