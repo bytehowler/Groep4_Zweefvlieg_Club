@@ -1,6 +1,24 @@
 <?php
-    include "database_connection.php"
+global $mysqli;
+include "database_connection.php";
 
+    if (isset($_POST["email"]) && isset($_POST["password"])) {
+        $sql = "SELECT password FROM users WHERE email = '{$_POST["email"]}';";
+        $result = $mysqli->query($sql);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $encrypted_password = $row["password"];
+
+            if (md5($_POST["password"]) == $encrypted_password) {
+                http_response_code(200);
+            } else {
+                http_response_code(418);
+            }
+        } else {
+            http_response_code(418);
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,11 +48,12 @@
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="checkbox">Check me out</label>
     </div>
-    <button type="submit" class="btn btn-light">Login</button>
+    <button type="button" class="btn btn-light" id="submit_button">Login</button>
 </form>
 </div>
 <footer>
     &copy; 2023 Sky High, Alle rechten voorbehouden.
 </footer>
 </body>
+<script src="js/signin.js"></script>
 </html>
