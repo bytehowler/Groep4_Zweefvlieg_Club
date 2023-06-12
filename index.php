@@ -19,7 +19,7 @@
         deze sit zal het een stuk makkelijker maken om vluchten en lessen in te plannen.
         ook kunt u hier een </p>
 </main>
-
+<p align="center"><iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.22333&lng=5.17639&overname=2&zoom=13&naam=Hilversum&size=2b&voor=1" scrolling=no width=330 height=330 frameborder=no></iframe></p>
 <footer>
     &copy; 2023 Sky High, Alle rechten voorbehouden.
 </footer>
