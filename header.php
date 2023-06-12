@@ -1,3 +1,8 @@
+<style>
+    .navbar {
+        background: linear-gradient(to right, rgba(0, 0, 139, 0.3), rgba(65, 105, 225, 0.3), rgba(135, 206, 235, 0.3));
+    }
+</style>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
