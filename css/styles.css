@@ -3,11 +3,28 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
+    background-color: #3494E3;
+}
+/* Additioneel CSS voor de navbar */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
 }
 
+nav li {
+    margin-right: 20px;
+}
+
+nav li a {
+    text-decoration: none;
+}
+
+
 header {
-    background-color: #333;
+    background-color: #023b6d;
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -25,10 +42,21 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+form{
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 25px;
+}
+
+
 footer {
-    background-color: #333;
+    background-color: #023b6d;
     color: #fff;
     padding: 10px;
     text-align: center;
+    margin-top: 20px;
+
 }
 
