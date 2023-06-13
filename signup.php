@@ -1,6 +1,6 @@
 <?php
     global $mysqli;
-    include "database_connection.php";
+    include "includes/database_connection.php";
 
     if (isset($_COOKIE["session_token"])) {
         header("Location: ./");
@@ -15,7 +15,9 @@
         $result = $mysqli->query($sql);
 
         $email = $_POST["email"];
-        $pattern = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/';
+        $phone = $_POST["phoneNumber"];
+        $emailPattern = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/';
+        $phonePattern = '/^06[0-9]{8}$/';
 
         if ($result && $result->num_rows > 0) {
             $return = array(
@@ -23,7 +25,7 @@
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
-        } elseif (!preg_match($pattern, $email)) {
+        } elseif (!preg_match($emailPattern, $email) || !preg_match($phonePattern, $email)) {
             $return = array(
                 'status' => 422,
                 'message' => "Unprocessable Content."

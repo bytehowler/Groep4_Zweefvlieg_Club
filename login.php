@@ -1,6 +1,6 @@
 <?php
     global $mysqli;
-    include "database_connection.php";
+    include "includes/database_connection.php";
 
     if (isset($_COOKIE["session_token"])) {
         header("Location: ./");
@@ -57,7 +57,7 @@
 
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 <form>
     <div class="form-group">
         <label for="exampleInputEmail1" class="font-weight-bold text-white" >Email address:</label>
