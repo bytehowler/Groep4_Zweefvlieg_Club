@@ -57,7 +57,7 @@
 
 </head>
 <body>
-<?php require "includes/header.php"; ?>
+<?php require "header.php"; ?>
 <form>
     <div class="form-group">
         <label for="exampleInputEmail1" class="font-weight-bold text-white" >Email address:</label>

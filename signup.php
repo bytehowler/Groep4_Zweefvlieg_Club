@@ -8,14 +8,26 @@
     }
 
     $requiredFields = ["firstName", "lastName", "email", "password",
-        "confirmationPassword", "phoneNumber", "verifyCode"];
+        "confirmationPassword", "phoneNumber", "birthDate", "verifyCode"];
 
-    if (array_key_exists($_POST, $requiredFields)) {
+    $postFilled = true;
+
+    foreach ($requiredFields as $field) {
+        if (!array_key_exists($field, $_POST)) {
+            $postFilled = false;
+            break;
+        }
+    }
+
+    if ($postFilled) {
         $sql = "SELECT * FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
+        $encrypted_password = md5($_POST["password"]);
+
         $email = $_POST["email"];
         $phone = $_POST["phoneNumber"];
+        $sqlDate = date('Y-m-d', strtotime($_POST["birthDate"]));
         $emailPattern = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/';
         $phonePattern = '/^06[0-9]{8}$/';
 
@@ -25,16 +37,37 @@
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
-        } elseif (!preg_match($emailPattern, $email) || !preg_match($phonePattern, $email)) {
+        } elseif (!preg_match($emailPattern, $email) || preg_match($phonePattern, $email)) {
             $return = array(
                 'status' => 422,
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
         } else {
-            //$sql = "INSERT INTO users (session_token, user_id) VALUES ('$token', {$row["user_id"]})";
-        }
+            $sql = "INSERT INTO users (first_name, last_name, birth_date, phone_number, email, password) 
+                    VALUES ('{$_POST["firstName"]}', '{$_POST["lastName"]}', '$sqlDate',
+                            '{$_POST["phoneNumber"]}', '{$_POST["email"]}', '$encrypted_password')";
 
+            $mysqli->query($sql);
+
+            $sql = "SELECT user_id FROM users WHERE email = '{$_POST["email"]}';";
+            $result = $mysqli->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user_id = $row["user_id"];
+
+                $token = uniqid(session_create_id() . ".", true);
+                $sql = "INSERT INTO sessions (session_token, user_id) VALUES ('$token', {$row["user_id"]})";
+                $mysqli->query($sql);
+                $return = array(
+                    'status' => 200,
+                    'message' => "Login Successful."
+                );
+                setcookie("session_token", $token);
+                http_response_code(200);
+            }
+        }
         print_r(json_encode($return));
         die();
     }
@@ -57,12 +90,12 @@
 <form>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="first_name_field" class="font-weight-bold text-white">Voornaam:</label>
-            <input type="text" class="form-control" id="first_name_field" placeholder="Voornaam">
+            <label for="firstname_field" class="font-weight-bold text-white">Voornaam:</label>
+            <input type="text" class="form-control" id="firstname_field" placeholder="Voornaam">
         </div>
         <div class="form-group col-md-6">
-            <label for="last_name_field" class="font-weight-bold text-white">Achternaam:</label>
-            <input type="text" class="form-control" id="last_name_field" placeholder="Achternaam">
+            <label for="lastname_field" class="font-weight-bold text-white">Achternaam:</label>
+            <input type="text" class="form-control" id="lastname_field" placeholder="Achternaam">
         </div>
     </div>
 
@@ -86,6 +119,11 @@
     <div class="form-group">
         <label for="phone_field" class="font-weight-bold text-white">Telefoonnummer:</label>
         <input type="tel" class="form-control" id="phone_field" aria-describedby="telefoonnummerHelp" placeholder="Bijv. 0612345678">
+    </div>
+
+    <div class="form-group">
+        <label for="birthdate_field" class="font-weight-bold text-white">Geboortedatum:</label>
+        <input type="date" class="form-control" id="birthdate_field">
     </div>
 
     <div class="form-group">
