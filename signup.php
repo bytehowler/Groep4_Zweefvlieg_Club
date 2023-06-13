@@ -7,38 +7,30 @@
         die();
     }
 
-    if (isset($_POST["email"]) && isset($_POST["password"])) {
-        $sql = "SELECT password, user_id FROM users WHERE email = '{$_POST["email"]}';";
+    $requiredFields = ["firstName", "lastName", "email", "password",
+        "confirmationPassword", "phoneNumber", "verifyCode"];
+
+    if (array_key_exists($_POST, $requiredFields)) {
+        $sql = "SELECT * FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $encrypted_password = $row["password"];
+        $email = $_POST["email"];
+        $pattern = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/';
 
-            if (md5($_POST["password"]) == $encrypted_password) {
-                $return = array(
-                    'status' => 200,
-                    'message' => "Login Successful."
-                );
-                $token = uniqid(session_create_id() . ".", true);
-                $sql = "INSERT INTO sessions (session_token, user_id) VALUES ('$token', {$row["user_id"]})";
-                $mysqli->query($sql);
-                setcookie("session_token", $token);
-                http_response_code(200);
-            } else {
-                $return = array(
-                    'status' => 403,
-                    'message' => "Login attempt denied."
-                );
-                http_response_code(403);
-            }
-        } else {
+        if ($result && $result->num_rows > 0) {
             $return = array(
-                'status' => 403,
-                'message' => "Login attempt denied."
+                'status' => 422,
+                'message' => "Unprocessable Content."
             );
-            http_response_code(403);
+            http_response_code(422);
+        } elseif (!preg_match($pattern, $email)) {
+            $return = array(
+                'status' => 422,
+                'message' => "Unprocessable Content."
+            );
+            http_response_code(422);
         }
+
         print_r(json_encode($return));
         die();
     }
@@ -53,7 +45,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="js/signup.js"></script>
 </head>
 <body>
 <?php require "header.php"; ?>
@@ -97,7 +89,7 @@
         <input type="password" class="form-control" id="verification_code_field" placeholder="Verificatie Code">
     </div>
 
-    <button type="submit" class="btn btn-light">Registreren</button>
+    <button type="button" class="btn btn-light" id="submit_button">Registreren</button>
 </form>
 
 </div>
