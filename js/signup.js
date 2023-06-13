@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event){
     function signUp() {
-        console.log("Hi")
 
         const getValue = (id) => document.getElementById(id).value;
 
@@ -15,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event){
         ];
 
         if (fields.some(field => field.length === 0)) {
-            console.log("empty");
             return;
         } else if (getValue("password_field") !== getValue("confirm_password_field")) {
             alert("Wachtwoorden komen niet overeen.");

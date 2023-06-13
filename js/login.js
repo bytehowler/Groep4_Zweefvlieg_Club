@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", function(event){
     function logIn() {
-        console.log("Hi")
 
         let email = document.getElementById("email_field").value;
         let password = document.getElementById("password_field").value;
 
         if (email.length == 0 || password.length == 0) {
-            console.log("empty");
             return;
         }
 

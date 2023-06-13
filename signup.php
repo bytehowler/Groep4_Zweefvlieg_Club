@@ -29,6 +29,8 @@
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
+        } else {
+            //$sql = "INSERT INTO users (session_token, user_id) VALUES ('$token', {$row["user_id"]})";
         }
 
         print_r(json_encode($return));
