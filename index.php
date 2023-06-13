@@ -14,12 +14,12 @@
 <?php require "header.php"; ?>
 
 <main>
-    <h2>Welkom bij Zweefvliegclub sky high! </h2>
-    <p>Wij van Sky High zijn blij om jullie te introduceren aan onze gloednieuwe website!
-        deze sit zal het een stuk makkelijker maken om vluchten en lessen in te plannen.
-        ook kunt u hier een </p>
+    <h2>Welkom bij Zweefvliegclub Sky High! </h2>
+    <p>Welkom op Sky High! Ontdek zweefvliegtuigen, training en prachtige locaties. Word lid van onze enthousiaste gemeenschap en begin je zweefvliegavontuur. Laat de lucht jouw speeltuin worden - welkom aan boord! </p>
 </main>
-<p align="center"><iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.22333&lng=5.17639&overname=2&zoom=13&naam=Hilversum&size=2b&voor=1" scrolling=no width=330 height=330 frameborder=no></iframe></p>
+
+<p align="center"><iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.22333&lng=5.17639&overname=2&zoom=11&naam=Hilversum&size=2b&voor=1" scrolling=no width=330 height=330 frameborder=no></iframe></p>
+<p align="center"><IFRAME SRC="//gadgets.buienradar.nl/gadget/forecastandstation/6260" NORESIZE SCROLLING=NO HSPACE=0 VSPACE=0 FRAMEBORDER=0 MARGINHEIGHT=0 MARGINWIDTH=0 WIDTH=300 HEIGHT=190></IFRAME></p>
 <footer>
     &copy; 2023 Sky High, Alle rechten voorbehouden.
 </footer>

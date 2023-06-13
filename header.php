@@ -13,7 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="vluchtplanner.html">Vluchtplanner</a>
+                    <a class="nav-link" href="planner.php">Vluchtplanner</a>
                 </li>
                 <?php
                 global $mysqli;
