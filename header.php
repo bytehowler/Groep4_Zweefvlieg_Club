@@ -13,12 +13,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="vluchtplanner.html">Vluchtplanner</a>
+                    <a class="nav-link" href="planner.php">Vluchtplanner</a>
                 </li>
                 <?php
                 global $mysqli;
                 $userId = null;
-                $is_admin = true;
+                $is_admin = false;
 
                 if (isset($_COOKIE["session_token"])) {
                     $sql = "SELECT user_id FROM sessions WHERE session_token = '{$_COOKIE["session_token"]}';";
@@ -27,23 +27,28 @@
                     if ($result && $result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         $userId = $row["user_id"];
+
+                        $sql = "SELECT role_id FROM users WHERE user_id = '$userId';";
+                        $result = $mysqli->query($sql);
+                        $row = $result->fetch_assoc();
+                        $is_admin = function() use ($row) { return $row["role_id"] >= 5; };
                     }
 
                 }
 
-                if ($userId && $is_admin) {
+                if ($userId && $is_admin()) {
                     echo <<<EOL
                     <li class="nav-item">
                         <a class="nav-link" href="admin.php">Admin Paneel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Uitloggen</a>
+                        <a class="nav-link" href="logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } elseif ($userId) {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Uitloggen</a>
+                        <a class="nav-link" href="logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } else {
