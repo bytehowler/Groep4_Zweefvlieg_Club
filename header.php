@@ -42,13 +42,13 @@
                         <a class="nav-link" href="admin.php">Admin Paneel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Uitloggen</a>
+                        <a class="nav-link" href="logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } elseif ($userId) {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Uitloggen</a>
+                        <a class="nav-link" href="logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } else {
