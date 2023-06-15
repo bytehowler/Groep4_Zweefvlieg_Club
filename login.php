@@ -60,19 +60,15 @@
 <?php require "header.php"; ?>
 <form>
     <div class="form-group">
-        <label for="exampleInputEmail1" class="font-weight-bold text-white" >Email address:</label>
+        <label for="email_field" class="font-weight-bold text-white" >Email address:</label>
         <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <small id="emailHelp" class="form-text text-muted">Jouw e-mail wordt nooit met derden gedeeld.</small>
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1" class="font-weight-bold text-white" >Password:</label>
+        <label for="password_field" class="font-weight-bold text-white" >Password:</label>
         <input type="password" class="form-control" id="password_field" placeholder="Password">
     </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label font-weight-bold text-white" for="checkbox">Check me out</label>
-    </div>
-    <button type="button" class="btn btn-light" id="submit_button">Login</button>
+    <button type="button" class="btn btn-light" id="submit_button">Inloggen</button>
 </form>
 </div>
 <footer>
