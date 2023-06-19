@@ -1,4 +1,4 @@
-
+<?php require "includes/database_connection.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<?php require "includes/header.php"; ?>
 <main>
     <h2>Vluchtplanner </h2>
     <p>Op deze pagina kunt u eigen vluchten en lessen plannen.</p>
