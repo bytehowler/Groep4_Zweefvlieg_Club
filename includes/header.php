@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./planner.php">Vluchtplanner</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./contact.php">Contact</a>
+                </li>
                 <?php
                 global $mysqli;
                 $userId = null;
@@ -35,7 +38,6 @@
                         $userFirstName = $row["first_name"];
                         $is_admin = function() use ($row) { return $row["role_id"] >= 5; };
                     }
-
                 }
 
                 if ($userId && $is_admin()) {
@@ -64,7 +66,6 @@
                     EOL;
                 }
                 ?>
-
             </ul>
         </div>
     </nav>

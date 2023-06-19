@@ -12,7 +12,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 <footer>
     &copy; 2023 Sky High, Alle rechten voorbehouden.
 </footer>
