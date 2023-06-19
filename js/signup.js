@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event){
+document.addEventListener("DOMContentLoaded", function(){
     function signUp() {
 
         const getValue = (id) => document.getElementById(id).value;
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                //window.location.href = "./index.php";
+                window.location.href = "./";
             } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 403) {
                 alert("Ongeldige inloggegevens ingevoerd.");
             }

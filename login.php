@@ -8,6 +8,12 @@
     }
 
     if (isset($_POST["email"]) && isset($_POST["password"])) {
+        foreach ($_POST as $key => $value) {
+            $value = mysqli_real_escape_string($mysqli, $value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $_POST[$key] = $value;
+        }
+
         $sql = "SELECT password, user_id FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
@@ -57,26 +63,21 @@
 
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 <form>
     <div class="form-group">
-        <label for="exampleInputEmail1" class="font-weight-bold text-white" >Email address:</label>
-        <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <label for="email_field" class="font-weight-bold text-white" >Email address:</label>
+        <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter email"
+               required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$">
+        <small id="emailHelp" class="form-text text-muted">Jouw e-mail wordt nooit met derden gedeeld.</small>
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1" class="font-weight-bold text-white" >Password:</label>
-        <input type="password" class="form-control" id="password_field" placeholder="Password">
+        <label for="password_field" class="font-weight-bold text-white" >Password:</label>
+        <input type="password" class="form-control" id="password_field" placeholder="Password" required>
     </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label font-weight-bold text-white" for="checkbox">Check me out</label>
-    </div>
-    <button type="button" class="btn btn-light" id="submit_button">Login</button>
+    <button type="button" class="btn btn-light" id="submit_button">Inloggen</button>
 </form>
 </div>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+<?php require "includes/footer.php"; ?>
 </body>
 </html>

@@ -20,6 +20,12 @@
     }
 
     if ($postFilled) {
+        foreach ($_POST as $key => $value) {
+            $value = mysqli_real_escape_string($mysqli, $value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $_POST[$key] = $value;
+        }
+
         $sql = "SELECT * FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
@@ -37,7 +43,7 @@
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
-        } elseif (!preg_match($emailPattern, $email) || preg_match($phonePattern, $email)) {
+        } elseif (!preg_match($emailPattern, $email) || !preg_match($phonePattern, $phone)) {
             $return = array(
                 'status' => 422,
                 'message' => "Unprocessable Content."
@@ -46,7 +52,7 @@
         } else {
             $sql = "INSERT INTO users (first_name, last_name, birth_date, phone_number, email, password) 
                     VALUES ('{$_POST["firstName"]}', '{$_POST["lastName"]}', '$sqlDate',
-                            '{$_POST["phoneNumber"]}', '{$_POST["email"]}', '$encrypted_password')";
+                    '{$_POST["phoneNumber"]}', '{$_POST["email"]}', '$encrypted_password')";
 
             $mysqli->query($sql);
 
@@ -85,7 +91,7 @@
     <script src="js/signup.js"></script>
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 
 <form>
     <div class="form-row">
@@ -135,8 +141,6 @@
 </form>
 
 </div>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+<?php require "includes/footer.php"; ?>
 </body>
 </html>
