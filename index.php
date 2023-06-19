@@ -14,7 +14,7 @@ require "includes/database_connection.php" ?>
 </head>
 <body>
 
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 
 <main>
     <?php
@@ -33,8 +33,6 @@ require "includes/database_connection.php" ?>
 
 <p align="center"><iframe src="https://gadgets.buienradar.nl/gadget/zoommap/?lat=52.22333&lng=5.17639&overname=2&zoom=11&naam=Hilversum&size=2b&voor=1" scrolling=no width=330 height=330 frameborder=no></iframe></p>
 <p align="center"><IFRAME SRC="//gadgets.buienradar.nl/gadget/forecastandstation/6260" NORESIZE SCROLLING=NO HSPACE=0 VSPACE=0 FRAMEBORDER=0 MARGINHEIGHT=0 MARGINWIDTH=0 WIDTH=300 HEIGHT=190></IFRAME></p>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+<?php require "includes/footer.php"; ?>
 </body>
 </html>

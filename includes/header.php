@@ -6,14 +6,14 @@
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.php">Sky High</a>
+        <a class="navbar-brand" href="./index.php">Sky High</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="planner.php">Vluchtplanner</a>
+                    <a class="nav-link" href="./planner.php">Vluchtplanner</a>
                 </li>
                 <?php
                 global $mysqli;
@@ -41,25 +41,25 @@
                 if ($userId && $is_admin()) {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="admin.php">Admin Paneel</a>
+                        <a class="nav-link" href="./admin.php">Admin Paneel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Uitloggen</a>
+                        <a class="nav-link" href="./logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } elseif ($userId) {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Uitloggen</a>
+                        <a class="nav-link" href="./logout.php">Uitloggen</a>
                     </li>
                     EOL;
                 } else {
                     echo <<<EOL
                     <li class="nav-item">
-                        <a class="nav-link" href="login.php">Inloggen</a>
+                        <a class="nav-link" href="./login.php">Inloggen</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="signup.php">Registreren</a>
+                        <a class="nav-link" href="./signup.php">Registreren</a>
                     </li>
                     EOL;
                 }

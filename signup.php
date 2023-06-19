@@ -91,7 +91,7 @@
     <script src="js/signup.js"></script>
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 
 <form>
     <div class="form-row">
@@ -141,8 +141,6 @@
 </form>
 
 </div>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+<?php require "includes/footer.php"; ?>
 </body>
 </html>

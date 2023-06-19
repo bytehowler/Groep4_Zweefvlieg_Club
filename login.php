@@ -63,7 +63,7 @@
 
 </head>
 <body>
-<?php require "header.php"; ?>
+<?php require "includes/header.php"; ?>
 <form>
     <div class="form-group">
         <label for="email_field" class="font-weight-bold text-white" >Email address:</label>
@@ -78,8 +78,6 @@
     <button type="button" class="btn btn-light" id="submit_button">Inloggen</button>
 </form>
 </div>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+<?php require "includes/footer.php"; ?>
 </body>
 </html>
