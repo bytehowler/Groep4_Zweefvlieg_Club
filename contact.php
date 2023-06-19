@@ -33,7 +33,8 @@
 <?php require "includes/header.php"; ?>
 <main class="container">
     <h2>Contacteer ons</h2>
-    <p>Heeft u vragen, opmerkingen of wilt u meer informatie? Neem gerust contact met ons op via onderstaand formulier.</p>
+    <p>Heeft u vragen, opmerkingen of wilt u meer informatie? Neem gerust contact met ons op via onderstaand formulier of bel ons op:</p>
+    <p>Telefoonnummer: <strong>+31 123 456 789</strong></p>
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form action="contact_process.php" method="post">
