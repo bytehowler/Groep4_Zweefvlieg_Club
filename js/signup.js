@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                window.location.href = "./";
+            //    window.location.href = "./";
             } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 403) {
                 alert("Ongeldige inloggegevens ingevoerd.");
             }

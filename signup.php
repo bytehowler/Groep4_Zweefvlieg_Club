@@ -20,6 +20,12 @@
     }
 
     if ($postFilled) {
+        foreach ($_POST as $key => $value) {
+            $value = mysqli_real_escape_string($mysqli, $value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $_POST[$key] = $value;
+        }
+
         $sql = "SELECT * FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
@@ -46,7 +52,7 @@
         } else {
             $sql = "INSERT INTO users (first_name, last_name, birth_date, phone_number, email, password) 
                     VALUES ('{$_POST["firstName"]}', '{$_POST["lastName"]}', '$sqlDate',
-                            '{$_POST["phoneNumber"]}', '{$_POST["email"]}', '$encrypted_password')";
+                    '{$_POST["phoneNumber"]}', '{$_POST["email"]}', '$encrypted_password')";
 
             $mysqli->query($sql);
 

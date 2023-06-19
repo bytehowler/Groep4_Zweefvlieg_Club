@@ -18,6 +18,7 @@
                 <?php
                 global $mysqli;
                 $userId = null;
+                $userFirstName = null;
                 $is_admin = false;
 
                 if (isset($_COOKIE["session_token"])) {
@@ -28,9 +29,10 @@
                         $row = $result->fetch_assoc();
                         $userId = $row["user_id"];
 
-                        $sql = "SELECT role_id FROM users WHERE user_id = '$userId';";
+                        $sql = "SELECT role_id, first_name FROM users WHERE user_id = '$userId';";
                         $result = $mysqli->query($sql);
                         $row = $result->fetch_assoc();
+                        $userFirstName = $row["first_name"];
                         $is_admin = function() use ($row) { return $row["role_id"] >= 5; };
                     }
 
