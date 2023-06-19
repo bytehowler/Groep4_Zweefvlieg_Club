@@ -8,7 +8,13 @@
     }
 
     if (isset($_POST["email"]) && isset($_POST["password"])) {
-        $sql = "SELECT password, user_id FROM users WHERE email = {$_POST["email"]};";
+        foreach ($_POST as $key => $value) {
+            $value = mysqli_real_escape_string($mysqli, $value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $_POST[$key] = $value;
+        }
+
+        $sql = "SELECT password, user_id FROM users WHERE email = '{$_POST["email"]}';";
         $result = $mysqli->query($sql);
 
         if ($result && $result->num_rows > 0) {
@@ -61,12 +67,13 @@
 <form>
     <div class="form-group">
         <label for="email_field" class="font-weight-bold text-white" >Email address:</label>
-        <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter email">
+        <input type="email" class="form-control" id="email_field" aria-describedby="emailHelp" placeholder="Enter email"
+               required pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$">
         <small id="emailHelp" class="form-text text-muted">Jouw e-mail wordt nooit met derden gedeeld.</small>
     </div>
     <div class="form-group">
         <label for="password_field" class="font-weight-bold text-white" >Password:</label>
-        <input type="password" class="form-control" id="password_field" placeholder="Password">
+        <input type="password" class="form-control" id="password_field" placeholder="Password" required>
     </div>
     <button type="button" class="btn btn-light" id="submit_button">Inloggen</button>
 </form>

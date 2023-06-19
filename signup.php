@@ -43,7 +43,7 @@
                 'message' => "Unprocessable Content."
             );
             http_response_code(422);
-        } elseif (!preg_match($emailPattern, $email) || preg_match($phonePattern, $email)) {
+        } elseif (!preg_match($emailPattern, $email) || !preg_match($phonePattern, $phone)) {
             $return = array(
                 'status' => 422,
                 'message' => "Unprocessable Content."
