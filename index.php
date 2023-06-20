@@ -1,4 +1,5 @@
-<?php global $userId, $userFirstName;
+<?php
+global $userId, $userFirstName;
 require "includes/database_connection.php" ?>
 <!DOCTYPE html>
 <html lang="en">
