@@ -1,4 +1,37 @@
-<?php require "includes/database_connection.php" ?>
+<?php
+
+    global $mysqli;
+    require "includes/database_connection.php";
+
+    if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["subject"]) && isset($_POST["message"])) {
+        foreach ($_POST as $key => $value) {
+            $value = mysqli_real_escape_string($mysqli, $value);
+            $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+            $_POST[$key] = $value;
+        }
+
+        $email = $_POST["email"];
+        $emailPattern = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/';
+
+        if (!preg_match($emailPattern, $email)) {
+            $return = array(
+                'status' => 422,
+                'message' => "Unprocessable Content."
+            );
+            http_response_code(422);
+
+            print_r(json_encode($return));
+            die();
+        }
+
+        $sql = "INSERT INTO messages (name, email, subject, message) 
+                    VALUES ('{$_POST["name"]}', '{$_POST["email"]}', '{$_POST["subject"]}', '{$_POST["message"]}')";
+
+        $mysqli->query($sql);
+
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +70,7 @@
     <p>Telefoonnummer: <strong>+31 123 456 789</strong></p>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form action="contact_process.php" method="post">
+            <form action="contact.php" method="post">
                 <div class="form-group">
                     <label for="name">Naam</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -45,6 +78,10 @@
                 <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Onderwerp</label>
+                    <input type="subject" class="form-control" id="subject" name="subject" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Bericht</label>
