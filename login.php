@@ -29,7 +29,7 @@
                 $token = uniqid(session_create_id() . ".", true);
                 $sql = "INSERT INTO sessions (session_token, user_id) VALUES ('$token', {$row["user_id"]})";
                 $mysqli->query($sql);
-                setcookie("session_token", $token);
+                setcookie("session_token", $token, time()+(3600*24*30));
                 http_response_code(200);
             } else {
                 $return = array(

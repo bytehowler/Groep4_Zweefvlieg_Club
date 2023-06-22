@@ -70,7 +70,7 @@
                     'status' => 200,
                     'message' => "Login Successful."
                 );
-                setcookie("session_token", $token);
+                setcookie("session_token", $token, time()+(3600*24*30));
                 http_response_code(200);
             }
         }
