@@ -1,4 +1,4 @@
-<?php include "includes/database_connection.php"; ?>
+<?php include "database/database_connection.php"; ?>
 
 
 
