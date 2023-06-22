@@ -1,4 +1,10 @@
+<?php include "database/database_connection.php"; ?>
+
+
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <title>Vluchtplanner</title>

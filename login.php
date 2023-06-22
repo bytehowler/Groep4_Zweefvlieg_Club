@@ -1,6 +1,6 @@
 <?php
     global $mysqli;
-    include "includes/database_connection.php";
+    include "database/database_connection.php";
 
     if (isset($_COOKIE["session_token"])) {
         header("Location: ./");
