@@ -1,6 +1,6 @@
 <?php
 global $userId, $userFirstName;
-require "includes/database_connection.php" ?>
+require "database/database_connection.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
