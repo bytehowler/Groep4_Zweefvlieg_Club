@@ -1,7 +1,7 @@
 <?php
 
     global $mysqli;
-    require "includes/database_connection.php";
+    require "database/database_connection.php";
 
     if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["subject"]) && isset($_POST["message"])) {
         foreach ($_POST as $key => $value) {
