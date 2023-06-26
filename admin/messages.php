@@ -1,4 +1,5 @@
 <?php
+
 global $mysqli, $is_admin;
 include "./../database/database_connection.php";
 
@@ -22,7 +23,7 @@ function fetchMessages(): string
         }
 
         $listOfMessages .= <<<EOL
-            <div class="row $color" style="margin-inline: -31px" onclick="fetchInbox({$row["message_id"]});">
+            <div class="row $color" style="margin-inline: -31px" onclick="fetchMessages({$row["message_id"]});">
                 <div class="col-3">
                     <b>{$subject}</b>
                 </div>
@@ -79,7 +80,7 @@ function getMessage(int $messageId): string
                 <div class="col-md">
                 </div>
                 <div class="col-{breakpoint}-auto font-weight-bold">
-                    <button type="button" class="btn btn-outline-danger" onclick="fetchInbox($messageId, 1)">Verwijder</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="fetchMessages($messageId, 1)">Verwijder</button>
                 </div>
             </div>
         </div>
@@ -88,7 +89,7 @@ function getMessage(int $messageId): string
 
 function removeMessage(int $messageId): string
 {
-    global $mysqli, $row;
+    global $mysqli;
 
     $sql = "DELETE FROM messages WHERE message_id = '$messageId';";
     $mysqli->query($sql);
@@ -96,26 +97,30 @@ function removeMessage(int $messageId): string
     return fetchMessages();
 }
 
+
+
 if (!isset($_COOKIE["session_token"])) {
     http_response_code(401);
     die();
 }
 
-$sql = "SELECT user_id FROM sessions WHERE session_token = '{$_COOKIE["session_token"]}';";
+$sessionToken = mysqli_real_escape_string($mysqli, $_COOKIE["session_token"]);
+$sql = "SELECT * FROM users u 
+JOIN sessions s on u.user_id = s.user_id 
+JOIN roles r on r.role_id = u.role_id 
+     WHERE session_token = '$sessionToken';";
 $result = $mysqli->query($sql);
 
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $userId = $row["user_id"];
+    $is_admin = function() use ($row) { return $row["role_id"] >= 5; };
 
-    $sql = "SELECT role_id FROM users WHERE user_id = '$userId';";
-    $result = $mysqli->query($sql);
-    $row = $result->fetch_assoc();
-    $is_admin = function () use ($row) { return $row["role_id"] >= 5; };
-}
-
-if (!$is_admin()) {
-    http_response_code(403);
+    if (!$is_admin()) {
+        http_response_code(403);
+        die();
+    }
+} elseif (!$result || $result->num_rows == 0) {
+    http_response_code(401);
     die();
 }
 

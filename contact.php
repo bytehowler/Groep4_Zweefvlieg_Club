@@ -92,8 +92,8 @@
         </div>
     </div>
 </main>
-<footer>
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
+
+<?php require "includes/footer.php"; ?>
+
 </body>
 </html>

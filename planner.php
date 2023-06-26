@@ -70,10 +70,7 @@
     </form>
 </main>
 
-<footer class="text-center mt-5">
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
-
+<?php require "includes/footer.php"; ?>
 
 </body>
 </html>
