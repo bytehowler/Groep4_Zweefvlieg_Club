@@ -47,7 +47,33 @@
                     document.getElementById("frame").innerHTML = response.message;
                 }
             };
-            xhr.open("POST", "./admin_inbox.php", true);
+            xhr.open("POST", "./admin/inbox.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("message_id=" + messageId + "&remove_flag=" + removeMessage);
+        }
+
+        function fetchUsers(messageId = 0, removeMessage = 0) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let response = JSON.parse(this.responseText);
+                    document.getElementById("frame").innerHTML = response.message;
+                }
+            };
+            xhr.open("POST", "./admin/users.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("message_id=" + messageId + "&remove_flag=" + removeMessage);
+        }
+
+        function fetchPlanes(messageId = 0, removeMessage = 0) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let response = JSON.parse(this.responseText);
+                    document.getElementById("frame").innerHTML = response.message;
+                }
+            };
+            xhr.open("POST", "./admin/planes.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.send("message_id=" + messageId + "&remove_flag=" + removeMessage);
         }
