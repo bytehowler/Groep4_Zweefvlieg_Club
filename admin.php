@@ -39,9 +39,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function changeContent(content) {
-            var frame = document.getElementById('frame');
-            frame.innerHTML = content;
+        function fetchInbox(messageId = 0, removeMessage = 0) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let response = JSON.parse(this.responseText);
+                    document.getElementById("frame").innerHTML = response.message;
+                }
+            };
+            xhr.open("POST", "./admin_inbox.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("message_id=" + messageId + "&remove_flag=" + removeMessage);
         }
 
         function deleteMail(id) {
@@ -59,85 +67,9 @@
     <div class="row">
         <div class="col-sm-2">
             <div class="btn-group-vertical">
-                <button class="btn btn-primary w-100" onclick="changeContent('Content 1')">Gebruikers</button>
-                <button class="btn btn-primary w-100" onclick="changeContent('Content 2')">Vliegtuigen</button>
-                <?php
-                $highlight = false;
-                $sql = "SELECT * FROM messages;";
-                $result = $mysqli->query($sql);
-                $listOfMessages = '<div class="container">';
-
-                while ($row = $result->fetch_assoc()) {
-
-                    $messageId = $row["message_id"];
-
-                    $timestamp = $row["timestamp"];
-                    $timestamp = date("Y-m-d",strtotime($timestamp));
-
-                    $message = $row["message"];
-
-                    $messageContent = <<<EOL
-                    <div class="container" id="message-$messageId">
-                        <div class="row">
-                            <div class="col-{breakpoint}-auto font-weight-bold">
-                                {$row["name"]}
-                            </div>
-                            <div class="col-md">
-                                &lt;{$row["email"]}&gt;
-                            </div>
-                            <div class="col-{breakpoint}-auto text-secondary">
-                                $timestamp
-                            </div>  
-                        </div>
-                        <br>
-                        <div class="row font-weight-bold">
-                            {$row["subject"]}
-                        </div>
-                        <div class="row">
-                            <div style="word-break:break-all">$message</div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md">
-                            </div>
-                            <div class="col-{breakpoint}-auto font-weight-bold">
-                                <button type="button" class="btn btn-outline-danger" onclick="">Verwijder</button>
-                            </div>
-                        </div>
-                    </div>
-                    EOL;
-
-                    $messageContent = trim(preg_replace('/\s+/', ' ', $messageContent));
-                    $messageContent = htmlspecialchars($messageContent, ENT_QUOTES);
-
-                    if ($highlight) {
-                        $class = "\"row bg-light\"";
-                    } else {
-                        $class = "\"row bg-white\"";
-                    }
-
-                    $subject = mb_strimwidth("{$row["subject"]}", 0, 15, "...");
-                    $message = mb_strimwidth("{$row["message"]}", 0, 45, "...");
-
-                    $listOfMessages .= <<<EOL
-                    
-                    <div class=$class onclick="changeContent('$messageContent');">
-                        <div class="col-3">
-                            <b>$subject</b>
-                        </div>
-                        <div class="col">
-                            $message
-                        </div>
-                    </div>
-                    EOL;
-
-                    $highlight = !$highlight;
-                }
-
-                $listOfMessages .= "</div>";
-
-                echo '<button class="btn btn-primary w-100" onclick="changeContent(`' . htmlspecialchars($listOfMessages, ENT_QUOTES) . '`)">Berichten</button>';
-                ?>
+                <button class="btn btn-primary w-100" onclick="">Gebruikers</button>
+                <button class="btn btn-primary w-100" onclick="">Vliegtuigen</button>
+                <button class="btn btn-primary w-100" onclick="fetchInbox()">Berichten</button>
             </div>
         </div>
         <div class="col-md-9">
