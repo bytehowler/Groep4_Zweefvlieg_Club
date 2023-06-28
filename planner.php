@@ -1,4 +1,5 @@
-<?php include "database/database_connection.php"; ?>
+<?php global $mysqli;
+include "database/database_connection.php"; ?>
 
 <!DOCTYPE html>
 
@@ -58,15 +59,16 @@
         <div class="form-group">
             <label for="type">Type zweefvliegtuig:</label>
             <?php
+                echo "<select class=\"form-control\" id=\"plane_type\" name=\"plane_type\">";
 
+                $sql = "SELECT * FROM planes;";
+                $result = $mysqli->query($sql);
 
-            echo <<<EOL
-                <select class="form-control" id="plane_type" name="plane_type">
-                    <option value="1">ASK-21</option>
-                    <option value="2">LS-4B</option>
-                    <option value="3">Duo Discus Turbo</option>
-                </select>
-                EOL;
+                while ($row = $result->fetch_assoc()) {
+                echo "<option value=\"{$row["tail_id"]}\">\"{$row["nickname"]}\" - {$row["model_name"]}</option>";
+                }
+
+                echo "</select>";
             ?>
         </div>
         <button type="button" class="btn btn-primary" id="submit_button">Boek vlucht</button>
