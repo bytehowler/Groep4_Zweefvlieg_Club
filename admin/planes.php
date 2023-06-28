@@ -71,7 +71,7 @@ function addPlane(string $tailId, string $modelName, int $year, string $manufact
     $manufacturer = mysqli_real_escape_string($mysqli, $manufacturer);
     $nickname = mysqli_real_escape_string($mysqli, $nickname);
 
-    $sql = "INSERT INTO planes (tail_id, model_n    ame, year, manufacturer, nickname)
+    $sql = "INSERT INTO planes (tail_id, model_name, year, manufacturer, nickname)
                 VALUES ('$tailId', '$modelName', '$year', '$manufacturer', '$nickname');";
     $mysqli->query($sql);
 }
