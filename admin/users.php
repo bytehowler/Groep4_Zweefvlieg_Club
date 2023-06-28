@@ -43,6 +43,16 @@ function fetchUsers(): string
 function getUser(int $userId): string
 {
     global $mysqli, $row;
+    $userId = mysqli_real_escape_string($mysqli, $userId);
+
+    $sql = "SELECT * FROM roles;";
+    $result = $mysqli->query($sql);
+
+    $roles = [];
+    while ($row = $result->fetch_assoc()) {
+        $roles[$row["role_id"]] = $row["role_name"];
+    }
+
 
     $sql = "SELECT * FROM users u JOIN roles r on r.role_id = u.role_id WHERE user_id = '$userId';";
     $result = $mysqli->query($sql);
@@ -50,6 +60,17 @@ function getUser(int $userId): string
     if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
     }
+
+    $roleSelector = "<select onchange=\"updateUser(this.value)\">";
+    foreach ($roles as $roleId => $roleName) {
+        if ($row["role_id"] == $roleId) {
+            $roleSelector .= "<option value=\"$roleId\" selected>$roleName</option>";
+        } else {
+            $roleSelector .= "<option value=\"$roleId\">$roleName</option>";
+        }
+    }
+
+    $roleSelector .= "</select>";
 
     return <<<EOL
     <div class="container">
@@ -76,7 +97,7 @@ function getUser(int $userId): string
                 <br>
                 <div class="row font-weight-bold">
                     <div class="col">
-                        {$row["role_name"]}
+                        $roleSelector
                     </div>
                 </div>
             </div>
@@ -94,7 +115,16 @@ function getUser(int $userId): string
     EOL;
 }
 
+function updateRole(int $userId, int $roleId): void
+{
+    global $mysqli;
 
+    $userId = mysqli_real_escape_string($mysqli, $userId);
+    $roleId = mysqli_real_escape_string($mysqli, $roleId);
+
+    $sql = "UPDATE users SET role_id = '$roleId' where user_id = '$userId';";
+    $mysqli->query($sql);
+}
 
 if (!isset($_COOKIE["session_token"])) {
     http_response_code(401);

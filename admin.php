@@ -68,6 +68,10 @@ if ($result && $result->num_rows > 0) {
             xhr.send("user_id=" + userId + "&remove_flag=" + removeMessage);
         }
 
+        function updateUser(userRole) {
+            alert(userRole);
+        }
+
         function fetchPlanes(tailId = 0, removeMessage = 0) {
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
@@ -97,7 +101,7 @@ if ($result && $result->num_rows > 0) {
         <div class="col-sm-2">
             <div class="btn-group-vertical">
                 <button class="btn btn-primary w-100" onclick="fetchUsers()">Gebruikers</button>
-                <button class="btn btn-primary w-100" onclick="">Vliegtuigen</button>
+                <button class="btn btn-primary w-100" onclick="fetchPlanes()">Vliegtuigen</button>
                 <button class="btn btn-primary w-100" onclick="fetchMessages()">Berichten</button>
             </div>
         </div>
