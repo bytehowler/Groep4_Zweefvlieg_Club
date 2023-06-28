@@ -133,8 +133,8 @@
     </div>
 
     <div class="form-group">
-        <label for="verification_code_field" class="font-weight-bold text-white">Inlog code:</label>
-        <input type="password" class="form-control" id="verification_code_field" placeholder="Verificatie Code">
+        <label hidden="hidden" for="verification_code_field" class="font-weight-bold text-white">Inlog code:</label>
+        <input hidden="hidden" type="password" class="form-control" id="verification_code_field" value="Kanker" placeholder="Verificatie Code">
     </div>
 
     <button type="button" class="btn btn-light" id="submit_button">Registreren</button>

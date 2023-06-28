@@ -7,7 +7,8 @@ function fetchUsers(): string
 {
     global $mysqli, $row;
 
-    $sql = "SELECT user_id, role_id, first_name, last_name FROM users;";
+    $sql = "SELECT user_id, u.role_id, role_name, first_name, last_name FROM users u 
+        JOIN roles r ON r.role_id = u.role_id;";
     $result = $mysqli->query($sql);
 
     $listOfUsers = '<div class="container">';
@@ -22,12 +23,12 @@ function fetchUsers(): string
         }
 
         $listOfUsers .= <<<EOL
-            <div class="row $color" style="margin-inline: -31px" onclick="fetchUsers({$row["user_id"]});">
-                <div class="col-3">
-                    <b>{$name}</b>
+            <div class="row $color" style="margin-inline: -31px" onclick="getUser({$row["user_id"]});">
+                <div class="col-xs-2 col-3">
+                    <b>$name</b>
                 </div>
                 <div class="col">
-                    {}
+                    {$row["role_name"]}
                 </div>
             </div>
             EOL;
@@ -61,7 +62,7 @@ function getUser(int $userId): string
         $row = $result->fetch_assoc();
     }
 
-    $roleSelector = "<select onchange=\"updateUser(this.value)\">";
+    $roleSelector = "<select onchange=\"updateRank($userId, this.value)\">";
     foreach ($roles as $roleId => $roleName) {
         if ($row["role_id"] == $roleId) {
             $roleSelector .= "<option value=\"$roleId\" selected>$roleName</option>";
@@ -106,13 +107,24 @@ function getUser(int $userId): string
                     <div class="col-md">
                     </div>
                     <div class="col-{breakpoint}-auto font-weight-bold">
-                        <button type="button" class="btn btn-outline-danger" onclick="fetchUsers($userId, 0)">Verwijder</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="removeUser($userId)">Verwijder</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     EOL;
+}
+
+function removeUser(int $userId): void
+{
+    global $mysqli;
+
+    $userId = mysqli_real_escape_string($mysqli, $userId);
+
+    $sql = "DELETE FROM users WHERE user_id = '$userId';";
+    $mysqli->query($sql);
+
 }
 
 function updateRole(int $userId, int $roleId): void
@@ -125,6 +137,8 @@ function updateRole(int $userId, int $roleId): void
     $sql = "UPDATE users SET role_id = '$roleId' where user_id = '$userId';";
     $mysqli->query($sql);
 }
+
+
 
 if (!isset($_COOKIE["session_token"])) {
     http_response_code(401);
@@ -151,22 +165,10 @@ if ($result && $result->num_rows > 0) {
     die();
 }
 
-
 $userId = $_POST["user_id"] ?? null;
 $removeFlag = $_POST["remove_flag"] ?? null;
-if (!isset($userId)) {
-    $return = array(
-        'status' => 422,
-        'message' => "Unprocessable Content."
-    );
-    http_response_code(422);
 
-    print_r(json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
-
-    die();
-}
-
-if ($userId === "0") {
+if (!sizeof($_POST)) {
     $return = array(
         'status' => 200,
         'message' => fetchUsers()
@@ -175,7 +177,31 @@ if ($userId === "0") {
 
     print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
     die();
-} elseif ($userId >= 1 && !$removeFlag) {
+
+} elseif (isset($_POST["user_id"]) && isset($_POST["role_id"])) {
+    $return = array(
+        'status' => 204,
+        'message' => updateRole($userId, $_POST["role_id"])
+    );
+
+    http_response_code(204);
+
+    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
+    die();
+
+} elseif (isset($_POST["user_id"]) && isset($_POST["remove_flag"])) {
+    removeUser($userId);
+
+    $return = array(
+        'status' => 200,
+        'message' => fetchUsers()
+    );
+    http_response_code(200);
+
+    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
+    die();
+
+} elseif (isset($_POST["user_id"])) {
     $return = array(
         'status' => 200,
         'message' => getUser($userId)
@@ -184,13 +210,5 @@ if ($userId === "0") {
 
     print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
     die();
-} elseif ($userId >= 1 && $removeFlag) {
-    $return = array(
-        'status' => 200,
-        'message' => getUser($userId)
-    );
-    http_response_code(200);
 
-    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
-    die();
 }

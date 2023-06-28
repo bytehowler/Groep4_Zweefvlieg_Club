@@ -34,61 +34,16 @@ if ($result && $result->num_rows > 0) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mijn Homepagina</title>
+    <title>Admin Paneel</title>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        function fetchMessages(messageId = 0, removeMessage = 0) {
-            let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let response = JSON.parse(this.responseText);
-                    document.getElementById("frame").innerHTML = response.message;
-                }
-            };
-            xhr.open("POST", "./admin/messages.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("message_id=" + messageId + "&remove_flag=" + removeMessage);
-        }
-
-        function fetchUsers(userId = 0, removeMessage = 0) {
-            let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let response = JSON.parse(this.responseText);
-                    document.getElementById("frame").innerHTML = response.message;
-                }
-            };
-            xhr.open("POST", "./admin/users.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("user_id=" + userId + "&remove_flag=" + removeMessage);
-        }
-
-        function updateUser(userRole) {
-            alert(userRole);
-        }
-
-        function fetchPlanes(tailId = 0, removeMessage = 0) {
-            let xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let response = JSON.parse(this.responseText);
-                    document.getElementById("frame").innerHTML = response.message;
-                }
-            };
-            xhr.open("POST", "./admin/planes.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.send("tail_id=" + tailId + "&remove_flag=" + removeMessage);
-        }
-
-        function deleteMail(id) {
-            console.log(id);
-        }
-    </script>
+    <script src="js/admin/users_functions.js"></script>
+    <script src="js/admin/planes_functions.js"></script>
+    <script src="js/admin/messages_functions.js"></script>
     <style>
     </style>
 </head>

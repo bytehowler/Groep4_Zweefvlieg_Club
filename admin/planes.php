@@ -10,7 +10,29 @@ function fetchPlanes(): string
     $sql = "SELECT tail_id, state_description, nickname FROM planes p JOIN states s on s.state_id = p.state_id;";
     $result = $mysqli->query($sql);
 
-    $listOfPlanes = '<div class="container">';
+    $listOfPlanes = "<div class=\"container\">";
+
+    $listOfPlanes .= <<< EOL
+            <div class="row">
+                <div class="col"><input class="form-control form-control-sm" type="text" name="tail_id" id="tail_id" placeholder="Registratie nr."></div>
+                <div class="col"><input class="form-control form-control-sm" type="text" name="model_name" id="model_name" placeholder="Model"></div>
+                <div class="col"><input class="form-control form-control-sm" type="text" name="year" id="year" placeholder="Bouwjaar"></div>
+                <div class="col"><input class="form-control form-control-sm" type="text" name="manufacturer" id="manufacturer" placeholder="Fabrikant"></div>
+                <div class="col"><input class="form-control form-control-sm" type="text" name="nickname" id="nickname" placeholder="Nickname"></div>
+                <div class="col-{breakpoint}-auto">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="addPlane(
+                        document.getElementById('tail_id').value,
+                        document.getElementById('model_name').value,
+                        document.getElementById('year').value,
+                        document.getElementById('manufacturer').value,
+                        document.getElementById('nickname').value
+                        )">🞥</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+        EOL;
 
     $index = 0;
     while ($row = $result->fetch_assoc()) {
@@ -39,7 +61,20 @@ function fetchPlanes(): string
     return $listOfPlanes;
 }
 
+function addPlane(string $tailId, string $modelName, int $year, string $manufacturer, string $nickname): void
+{
+    global $mysqli;
 
+    $tailId = mysqli_real_escape_string($mysqli, $tailId);
+    $modelName = mysqli_real_escape_string($mysqli, $modelName);
+    $year = mysqli_real_escape_string($mysqli, $year);
+    $manufacturer = mysqli_real_escape_string($mysqli, $manufacturer);
+    $nickname = mysqli_real_escape_string($mysqli, $nickname);
+
+    $sql = "INSERT INTO planes (tail_id, model_n    ame, year, manufacturer, nickname)
+                VALUES ('$tailId', '$modelName', '$year', '$manufacturer', '$nickname');";
+    $mysqli->query($sql);
+}
 
 if (!isset($_COOKIE["session_token"])) {
     http_response_code(401);
@@ -67,44 +102,21 @@ if ($result && $result->num_rows > 0) {
 }
 
 $tailId = $_POST["tail_id"] ?? null;
+$modelName = $_POST["model_name"] ?? null;
+$year = $_POST["year"] ?? null;
+$manufacturer = $_POST["manufacturer"] ?? null;
+$nickname = $_POST["nickname"] ?? null;
+
 $removeFlag = $_POST["remove_flag"] ?? null;
-if (!isset($tailId)) {
-    $return = array(
-        'status' => 422,
-        'message' => "Unprocessable Content."
-    );
-    http_response_code(422);
 
-    print_r(json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+if (isset($tailId) && isset($modelName) && isset($year) && isset($manufacturer) && isset($nickname)) {
+    addPlane($tailId, $modelName, $year, $manufacturer, $nickname);
 
-    die();
 }
-
-if ($tailId === "0") {
-    $return = array(
-        'status' => 200,
-        'message' => fetchPlanes()
-    );
-    http_response_code(200);
-
-    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
-    die();
-} elseif ($tailId != 0 && !$removeFlag) {
-    $return = array(
-        'status' => 200,
-        'message' => getMessage($tailId)
-    );
-    http_response_code(200);
-
-    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
-    die();
-} elseif ($messageId >= 1 && $removeFlag) {
-    $return = array(
-        'status' => 200,
-        'message' => removeMessage($messageId)
-    );
-    http_response_code(200);
-
-    print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
-    die();
-}
+$return = array(
+    'status' => 200,
+    'message' => fetchPlanes()
+);
+http_response_code(200);
+print_r(str_replace(["\\r", "\\n"], '', json_encode($return, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)));
+die(); 
