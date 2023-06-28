@@ -78,6 +78,8 @@
     <button type="button" class="btn btn-light" id="submit_button">Inloggen</button>
 </form>
 </div>
+
 <?php require "includes/footer.php"; ?>
+
 </body>
 </html>

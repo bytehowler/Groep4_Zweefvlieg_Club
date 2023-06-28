@@ -1,8 +1,5 @@
 <?php include "database/database_connection.php"; ?>
 
-
-
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -39,7 +36,7 @@
 <?php require "includes/header.php"; ?>
 
 <main class="container text-center">
-    <h2 class="mt-5">Vluchtplanner</h2>
+    <h2 class="mt-5">Vluchtenplanner</h2>
     <p>Op deze pagina kunt u eigen vluchten en lessen plannen.</p>
 
     <form>
@@ -60,20 +57,23 @@
         </div>
         <div class="form-group">
             <label for="type">Type zweefvliegtuig:</label>
-            <select class="form-control" id="type" name="type">
-                <option value="1">ASK-21</option>
-                <option value="2">LS-4B</option>
-                <option value="3">Duo Discus Turbo</option>
-            </select>
+            <?php
+
+
+            echo <<<EOL
+                <select class="form-control" id="plane_type" name="plane_type">
+                    <option value="1">ASK-21</option>
+                    <option value="2">LS-4B</option>
+                    <option value="3">Duo Discus Turbo</option>
+                </select>
+                EOL;
+            ?>
         </div>
         <button type="button" class="btn btn-primary" id="submit_button">Boek vlucht</button>
     </form>
 </main>
 
-<footer class="text-center mt-5">
-    &copy; 2023 Sky High, Alle rechten voorbehouden.
-</footer>
-
+<?php require "includes/footer.php"; ?>
 
 </body>
 </html>
